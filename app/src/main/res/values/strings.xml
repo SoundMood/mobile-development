@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SoundMood</string>
+    <string name="spotify_text">Spotify</string>
+    <string name="tagline">Sounding \nyour mood\nwith\nSound Mood</string>
+    <string name="login_description">Login with your Spotify account</string>
+    <string name="register_description">Doesn\'t have Spotify account</string>
+</resources>

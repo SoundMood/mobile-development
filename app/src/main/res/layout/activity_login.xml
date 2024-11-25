@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="#DCDAE5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    tools:context=".ui.loginpage.LoginActivity">
+
+    <ImageView
+        android:id="@+id/illustration_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/illustration_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/mockup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/mockup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/tagline"
+        android:textSize="40sp"
+        android:textColor="@color/purple"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/illustration_login"
+        app:layout_constraintEnd_toStartOf="@+id/mockup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/soundwave"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tagline"
+        app:layout_constraintEnd_toEndOf="@+id/tv_tagline"
+        app:layout_constraintStart_toStartOf="@+id/tv_tagline"
+        app:layout_constraintTop_toTopOf="@+id/tv_tagline"
+        app:layout_constraintVertical_bias="0.63" />
+
+    <TextView
+        android:id="@+id/tv_login_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="-8dp"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        android:text="@string/login_description"
+        app:layout_constraintEnd_toEndOf="@+id/tv_tagline"
+        app:layout_constraintStart_toStartOf="@+id/tv_tagline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tagline" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawableStart="@drawable/spotify_icon"
+        android:gravity="center"
+        android:paddingHorizontal="45dp"
+        android:fontFamily="@font/poppins_extrabold"
+        android:background="@drawable/button"
+        android:text="@string/spotify_text"
+        android:textColor="@color/white"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tv_login_desc"
+        app:layout_constraintStart_toStartOf="@+id/tv_login_desc"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_desc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_description"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/gray"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
