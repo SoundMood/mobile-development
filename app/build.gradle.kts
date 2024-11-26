@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.okhttp.v4110)
 
     // spotify
-    implementation(files("C:\\Users\\USER\\Desktop\\Bangkit\\spotify-app-remote-release-0.8.0.aar"))
+    implementation(files("spotify-app-remote-release-0.8.0.aar"))
     implementation(libs.auth)
 
     // navigation
