@@ -45,7 +45,22 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.gson)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // okhttp
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp.v4110)
+
+    // spotify
+    implementation(files("C:\\Users\\USER\\Desktop\\Bangkit\\spotify-app-remote-release-0.8.0.aar"))
+    implementation(libs.auth)
+
+    // navigation
+    implementation(libs.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
 }

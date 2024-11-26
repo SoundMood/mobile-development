@@ -4,4 +4,9 @@
     <string name="tagline">Sounding \nyour mood\nwith\nSound Mood</string>
     <string name="login_description">Login with your Spotify account</string>
     <string name="register_description">Doesn\'t have Spotify account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_bottom_menu">Home</string>
+    <string name="add_bottom_menu">Add</string>
+    <string name="history_bottom_menu">History</string>
 </resources>

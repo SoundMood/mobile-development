@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,19 +15,25 @@
         android:theme="@style/Theme.SoundMood"
         tools:targetApi="31">
         <activity
+            android:name=".ui.fragment.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.loginpage.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <data
+                    android:host="https://com.spotify.android.spotifysdkkotlindemo/callback"
+                    android:scheme="SoundMood"
+                    tools:ignore="AppLinkUrlError" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.gettingstartedpage.GettingStartedActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>

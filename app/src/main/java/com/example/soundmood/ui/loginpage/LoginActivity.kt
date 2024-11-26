@@ -1,21 +1,35 @@
 package com.example.soundmood.ui.loginpage
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.soundmood.R
+import com.example.soundmood.databinding.ActivityLoginBinding
+import com.example.soundmood.ui.fragment.MainActivity
+import com.spotify.android.appremote.api.SpotifyAppRemote
+
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+    private val requestCode = 1337
+    private val clientId = "fc6d180eb8ba48e08a914e29d3c812ea"
+    private val redirectUri = "https://youtube.com"
+    private var spotifyAppRemote: SpotifyAppRemote? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }
     }
+
+
+
+
+
 }

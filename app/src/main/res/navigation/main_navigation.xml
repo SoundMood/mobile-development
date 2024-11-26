@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homepagefragment">
+
+    <fragment
+        android:id="@+id/homepagefragment"
+        android:name="com.example.soundmood.ui.fragment.homepage.HomePageFragment"
+        android:label="fragment_homepagefragment"
+        tools:layout="@layout/fragment_homepagefragment" >
+        <action
+            android:id="@+id/action_homepagefragment_to_profilePageFragment2"
+            app:destination="@id/profilePageFragment" />
+        <action
+            android:id="@+id/action_homepagefragment_to_historyPageFragment2"
+            app:destination="@id/historyPageFragment" />
+        <action
+            android:id="@+id/action_homepagefragment_to_captureImagePageFragment"
+            app:destination="@id/captureImagePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilePageFragment"
+        android:name="com.example.soundmood.ui.fragment.profilepage.ProfilePageFragment"
+        android:label="fragment_profilepagefragment"
+        tools:layout="@layout/fragment_profilepagefragment" />
+    <fragment
+        android:id="@+id/historyPageFragment"
+        android:name="com.example.soundmood.ui.fragment.historypage.HistoryPageFragment"
+        android:label="fragment_history_page"
+        tools:layout="@layout/fragment_history_page" />
+    <fragment
+        android:id="@+id/captureImagePageFragment"
+        android:name="com.example.soundmood.ui.fragment.captureimagepage.CaptureImagePageFragment"
+        android:label="fragment_capture_image_page"
+        tools:layout="@layout/fragment_capture_image_page" />
+</navigation>
