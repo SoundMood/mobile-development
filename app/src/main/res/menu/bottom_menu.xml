@@ -7,8 +7,8 @@
 
     <item
         android:id="@+id/captureImagePageFragment"
-        android:title="@string/add_bottom_menu"
-        android:icon="@drawable/ic_add"/>
+        android:title=""
+        android:enabled="false"/>
 
     <item
         android:id="@+id/historyPageFragment"

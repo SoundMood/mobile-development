@@ -11,14 +11,12 @@
         android:label="fragment_homepagefragment"
         tools:layout="@layout/fragment_homepagefragment" >
         <action
-            android:id="@+id/action_homepagefragment_to_profilePageFragment2"
+            android:id="@+id/action_homepagefragment_to_profilePageFragment"
             app:destination="@id/profilePageFragment" />
         <action
-            android:id="@+id/action_homepagefragment_to_historyPageFragment2"
+            android:id="@+id/action_homepagefragment_to_historyPageFragment"
             app:destination="@id/historyPageFragment" />
-        <action
-            android:id="@+id/action_homepagefragment_to_captureImagePageFragment"
-            app:destination="@id/captureImagePageFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/profilePageFragment"
@@ -30,9 +28,5 @@
         android:name="com.example.soundmood.ui.fragment.historypage.HistoryPageFragment"
         android:label="fragment_history_page"
         tools:layout="@layout/fragment_history_page" />
-    <fragment
-        android:id="@+id/captureImagePageFragment"
-        android:name="com.example.soundmood.ui.fragment.captureimagepage.CaptureImagePageFragment"
-        android:label="fragment_capture_image_page"
-        tools:layout="@layout/fragment_capture_image_page" />
+
 </navigation>

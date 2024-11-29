@@ -9,4 +9,7 @@
     <string name="home_bottom_menu">Home</string>
     <string name="add_bottom_menu">Add</string>
     <string name="history_bottom_menu">History</string>
+    <string name="capture_image_page">Capture Image Page</string>
+    <string name="home_page">Home page</string>
+    <string name="profile_page">Profile Page</string>
 </resources>

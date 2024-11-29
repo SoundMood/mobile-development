@@ -51,6 +51,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // constrain & coordinator layout
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.coordinatorlayout)
+
     // okhttp
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

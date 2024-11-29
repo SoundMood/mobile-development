@@ -1,12 +1,13 @@
 package com.example.soundmood.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.soundmood.R
 import com.example.soundmood.databinding.ActivityMainBinding
+import com.example.soundmood.ui.captureimagepage.CaptureImagePage
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +24,17 @@ class MainActivity : AppCompatActivity() {
         val navView : BottomNavigationView = binding.navigationView
         val navController = findNavController(R.id.navigation_main_activity_host)
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homepagefragment,R.id.captureImagePageFragment,R.id.historyPageFragment
-            )
-        )
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.homepagefragment,R.id.captureImagePageFragment,R.id.historyPageFragment
+//            )
+//        )
+
 
 //        setupActionBarWithNavController(navController,appBarConfiguration)
         navView.setupWithNavController(navController)
+        binding.fabCaptureImage.setOnClickListener {
+            startActivity(Intent(this@MainActivity, CaptureImagePage::class.java))
+        }
     }
 }
