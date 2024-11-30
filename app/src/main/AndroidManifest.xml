@@ -27,9 +27,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <data
-                    android:host="https://com.spotify.android.spotifysdkkotlindemo/callback"
-                    android:scheme="SoundMood"
-                    tools:ignore="AppLinkUrlError" />
+                    android:host="callback"
+                    android:scheme="com.example.soundmood"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

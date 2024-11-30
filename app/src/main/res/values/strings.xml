@@ -12,4 +12,5 @@
     <string name="capture_image_page">Capture Image Page</string>
     <string name="home_page">Home page</string>
     <string name="profile_page">Profile Page</string>
+    <string name="logout">Logout</string>
 </resources>

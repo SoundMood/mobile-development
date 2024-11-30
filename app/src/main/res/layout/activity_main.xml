@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
 
-    
+
     <fragment
         android:id="@+id/navigation_main_activity_host"
         android:name="androidx.navigation.fragment.NavHostFragment"

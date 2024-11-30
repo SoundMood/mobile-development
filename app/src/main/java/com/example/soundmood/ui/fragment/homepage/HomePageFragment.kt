@@ -27,7 +27,27 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnLogout.setOnClickListener {
+            logout()
+        }
 
     }
+
+    private fun logout() {
+        // Hapus token dari SharedPreferences
+        val sharedPreferences = requireContext().getSharedPreferences("spotify_prefs", android.content.Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear() // Hapus semua data di SharedPreferences
+        editor.apply()
+
+        // Arahkan pengguna kembali ke LoginActivity
+        val intent = android.content.Intent(requireContext(), com.example.soundmood.ui.loginpage.LoginActivity::class.java)
+        intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+
+        // (Opsional) Hentikan aktivitas host jika diperlukan
+        requireActivity().finish()
+    }
+
 
 }
