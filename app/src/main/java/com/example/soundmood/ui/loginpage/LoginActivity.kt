@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
+import com.example.soundmood.data.PreferenceViewModel
 import com.example.soundmood.databinding.ActivityLoginBinding
+import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.fragment.MainActivity
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
@@ -22,6 +26,10 @@ class LoginActivity : AppCompatActivity() {
     private val redirectUri = "com.example.authorizationtest://callback"
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
+    private val preferenceViewModel : PreferenceViewModel by viewModels{
+        ViewModelFactory(applicationContext)
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +37,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Coba Auth ke Spotify
+        preferenceViewModel.accsessToken.asLiveData().observe(this){token->
+            if(token.isNullOrEmpty()){
+                Log.d("LoginPage","Token is Null!")
+            }else{
+                // Ke main activity
+                navigateMain()
+            }
+        }
+
+        // Coba Auth ke akun Spotify
         binding.btnLogin.setOnClickListener {
             loginWithSpotify()
         }
-
 
     }
 
@@ -78,10 +94,14 @@ class LoginActivity : AppCompatActivity() {
             when (response.type) {
                 AuthorizationResponse.Type.TOKEN -> {
                     val accessToken = response.accessToken
-                    saveToken(accessToken)
                     Log.d("SpotifyAuth", "Token received: $accessToken")
+
+                    // Simpan access token pada datastore
+                    saveAccessToken(accessToken)
                     Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+
+                    // Ke main activity
+                   navigateMain()
                 }
                 AuthorizationResponse.Type.ERROR -> {
                     Log.e("SpotifyAuth", "Error: ${response.error}")
@@ -95,20 +115,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToken(accessToken: String) {
-        val sharedPreferences = getSharedPreferences("spotify_prefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("access_token", accessToken)
-        editor.apply()
+    private fun saveAccessToken(accessToken: String) {
+        preferenceViewModel.saveAccsessToken(accessToken)
     }
 
-    private fun getAccessToken(): String? {
-        val sharedPreferences = getSharedPreferences("spotify_prefs", MODE_PRIVATE)
-        return sharedPreferences.getString("access_token", null)
+    private fun getAccessToken():String?{
+        var accessToken:String? =null
+        preferenceViewModel.accsessToken.asLiveData().observe(this){token->
+            accessToken = token
+        }
+        return accessToken
     }
 
-
-
-
+    private fun navigateMain(){
+        startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+        finish()
+    }
 
 }
