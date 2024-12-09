@@ -19,4 +19,5 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="about">About</string>
     <string name="sign_out">Sign Out</string>
+    <string name="your_history">Your History</string>
 </resources>

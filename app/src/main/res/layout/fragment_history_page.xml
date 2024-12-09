@@ -5,42 +5,92 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.historypage.HistoryPageFragment">
-    <ImageView
-        android:id="@+id/imageview_profile"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/startingpage1"
-        android:background="@drawable/roundimage"
-        android:scaleType="centerCrop"
-        android:clipToOutline="true"
-
-        app:layout_constraintLeft_toLeftOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/cl_profile"
+        >
+        <ImageView
+            android:id="@+id/imageview_profile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/startingpage1"
+            android:background="@drawable/roundimage"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/imageview_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_marginTop="-10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="profile name"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+
+                />
+        </LinearLayout>
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_your_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_history"
+        app:layout_constraintTop_toBottomOf="@id/cl_profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_bold"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
+        android:textColor="@color/purple"/>
+    <TextView
+        android:id="@+id/tv_latest_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All your latest playlist"
+        app:layout_constraintTop_toBottomOf="@id/tv_your_history"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="-8dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_latest_playlist"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/welcome"
-        app:layout_constraintBottom_toBottomOf="@id/imageview_profile"
-        app:layout_constraintLeft_toRightOf="@id/imageview_profile"
-        app:layout_constraintTop_toTopOf="@id/imageview_profile" />
-
-
-
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="History Page"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
