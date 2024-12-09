@@ -20,4 +20,15 @@
     <string name="about">About</string>
     <string name="sign_out">Sign Out</string>
     <string name="your_history">Your History</string>
+    <string name="placeholder_name">Flora Shafiqa</string>
+    <string name="placeholder_id">ID : 1234</string>
+    <string name="button_homepage">Get Your Mood!</string>
+    <string name="weekly_title_homepage">Weekly\'s Favorite Mood</string>
+    <string name="profile_image">profile image</string>
+    <string name="homepage_description_title">How\'s Your Mood today?</string>
+    <string name="homepage_page_description">Choose your mood to get suitable music \nrecommendations.</string>
+    <string name="weekly_favorite_mood_placeholder">mood</string>
+    <string name="homepage_recommendation_title">Recommendation for You</string>
+    <string name="image_placeholder">image placeholder</string>
+    <string name="user_name">User Name</string>
 </resources>

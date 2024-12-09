@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val requestCodes = 1337
-    private val clientId = "b9d3146baa9a46b49bf9ddeb22aac967"
+    private val clientId = "4152b43658be46e092036a77856d0b09"
     private val redirectUri = "com.example.authorizationtest://callback"
     private var spotifyAppRemote: SpotifyAppRemote? = null
 

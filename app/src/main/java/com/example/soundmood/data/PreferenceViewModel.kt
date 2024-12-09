@@ -20,6 +20,12 @@ class PreferenceViewModel(private val repository: PreferenceRepository):ViewMode
         }
     }
 
+    fun clearAccsessToken(token:String){
+        viewModelScope.launch {
+            repository.clearAccessToken(token)
+        }
+    }
+
     // Menyimpan dark mode
     fun saveDarkMode(isDark:Boolean){
         viewModelScope.launch {

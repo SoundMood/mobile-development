@@ -8,18 +8,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.soundmood.data.PreferenceRepository
 import com.example.soundmood.data.PreferenceViewModel
 import com.example.soundmood.ui.fragment.homepage.HomePageViewModel
+import com.example.soundmood.ui.fragment.profilepage.ProfilePageViewModel
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val repository = PreferenceRepository(context)
+        val preferenceViewModel = PreferenceViewModel(repository)
         return when {
             modelClass.isAssignableFrom(PreferenceViewModel::class.java) -> {
                 PreferenceViewModel(repository) as T
             }
             modelClass.isAssignableFrom(HomePageViewModel::class.java) -> {
-                val preferenceViewModel = PreferenceViewModel(repository)
                 HomePageViewModel(preferenceViewModel) as T
+            }
+            modelClass.isAssignableFrom(ProfilePageViewModel::class.java) -> {
+                ProfilePageViewModel(preferenceViewModel) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
