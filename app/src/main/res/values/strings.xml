@@ -20,4 +20,8 @@
     <string name="about">About</string>
     <string name="sign_out">Sign Out</string>
     <string name="your_history">Your History</string>
+    <string name="back">Back</string>
+    <string name="here_are_your_playlist">Here are Your playlist</string>
+    <string name="playlist">Playlist</string>
+    <string name="export">Export</string>
 </resources>

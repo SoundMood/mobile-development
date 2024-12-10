@@ -19,7 +19,6 @@ class PreferenceViewModel(private val repository: PreferenceRepository):ViewMode
             repository.saveAccessToken(token)
         }
     }
-
     // Menyimpan dark mode
     fun saveDarkMode(isDark:Boolean){
         viewModelScope.launch {
