@@ -24,4 +24,6 @@
     <string name="here_are_your_playlist">Here are Your playlist</string>
     <string name="playlist">Playlist</string>
     <string name="export">Export</string>
+    <string name="tap_the_camera_button_to_take_the_selfie">Tap the camera button to take the selfie</string>
+    <string name="let_s_take_a_selfie">Let’s Take a Selfie!</string>
 </resources>

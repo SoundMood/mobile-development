@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/white" /> <!-- Ganti dengan warna latar -->
-    <corners android:radius="300dp" /> <!-- Pastikan radius cukup besar untuk membulatkan -->
+    <solid android:color="@color/purple" /> <!-- Ganti dengan warna latar -->
+    <corners android:radius="1000dp" /> <!-- Pastikan radius cukup besar untuk membulatkan -->
 </shape>
