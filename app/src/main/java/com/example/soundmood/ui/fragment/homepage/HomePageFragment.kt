@@ -1,26 +1,32 @@
 package com.example.soundmood.ui.fragment.homepage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.soundmood.R
 import com.example.soundmood.databinding.FragmentHomepagefragmentBinding
 import com.example.soundmood.ui.ViewModelFactory
+import com.example.soundmood.ui.captureimagepage.CaptureImagePage
+import com.example.soundmood.ui.fragment.profilepage.ProfilePageFragment
 import com.spotify.android.appremote.api.SpotifyAppRemote
 
 
-class HomePageFragment : Fragment() {
+class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
 
 
     private var _binding : FragmentHomepagefragmentBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel : HomePageViewModel
-    private lateinit var adapter : RecyclerViewAdapter
 
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
@@ -30,47 +36,33 @@ class HomePageFragment : Fragment() {
     ): View {
         _binding = FragmentHomepagefragmentBinding.inflate(inflater,container,false)
 
-//        viewModel = ViewModelProvider(this, ViewModelFactory(requireContext())).get(HomePageViewModel::class.java)
-//
-//        adapter = RecyclerViewAdapter(emptyList())
-//
-//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        viewModel.recommendations.observe(viewLifecycleOwner){tracks->
-//            adapter = RecyclerViewAdapter(tracks)
-//            binding.recyclerView.adapter = adapter
-//        }
-//
-//        viewModel.getRecommendations()
+        viewModel = ViewModelProvider(this,ViewModelFactory(requireContext())).get(HomePageViewModel::class.java)
 
 
-//        binding.btnLogout.setOnClickListener {
-//            logout()
-//        }
+        viewModel.userName.observe(viewLifecycleOwner){userName->
+            binding.textviewUsername.text = userName
+        }
+
+        viewModel.userImageProfile.observe(viewLifecycleOwner){ imageUrl->
+            Glide.with(requireContext())
+                .load(imageUrl)
+                .circleCrop()
+                .into(binding.imageviewProfile)
+        }
+
+        binding.btnGenerateplaylist.setOnClickListener{
+            startActivity(Intent(requireContext(),CaptureImagePage::class.java))
+        }
+
+        binding.imageviewProfile.setOnClickListener{
+           findNavController().navigate(R.id.profilePageFragment)
+        }
 
     }
-
-//    private fun logout() {
-//        // Hapus token dari SharedPreferences
-//        val sharedPreferences = requireContext().getSharedPreferences("spotify_prefs", android.content.Context.MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-//        editor.clear() // Hapus semua data di SharedPreferences
-//        editor.apply()
-//
-//        // Arahkan pengguna kembali ke LoginActivity
-//        val intent = android.content.Intent(requireContext(), com.example.soundmood.ui.loginpage.LoginActivity::class.java)
-//        intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        startActivity(intent)
-//
-//        // (Opsional) Hentikan aktivitas host jika diperlukan
-//        requireActivity().finish()
-//    }
-
 
 }

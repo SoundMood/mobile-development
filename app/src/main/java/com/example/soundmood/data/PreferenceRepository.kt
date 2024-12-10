@@ -43,4 +43,10 @@ class PreferenceRepository(private val context : Context) {
     val darkModeFlow : Flow<Boolean> = context.dataStore.data.map { preference->
         preference[DARK_MODE]?:false
     }
+
+    suspend fun clearAccessToken(token:String){
+        context.dataStore.edit { preference->
+            preference.remove(ACCESS_TOKEN)
+        }
+    }
 }
