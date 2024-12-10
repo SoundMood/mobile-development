@@ -19,7 +19,8 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/roundimage"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
@@ -33,9 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/imageview_profile"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+
+
 
             >
 
