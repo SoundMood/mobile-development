@@ -26,6 +26,8 @@
         <activity
             android:name=".ui.captureimagepage.CaptureImagePage"
             android:exported="false" />
+        <activity android:name=".ui.moodresultpage.MoodResultActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.fragment.MainActivity"
             android:exported="false" />

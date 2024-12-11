@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.soundmood.data.PreferenceRepository
 import com.example.soundmood.data.PreferenceViewModel
+import com.example.soundmood.ui.captureimagepage.CaptureViewModel
 import com.example.soundmood.ui.fragment.homepage.HomePageViewModel
 import com.example.soundmood.ui.fragment.profilepage.ProfilePageViewModel
 import com.example.soundmood.ui.loginpage.LoginViewModel
+import com.example.soundmood.ui.moodresultpage.MoodResultViewModel
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
@@ -28,6 +30,12 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java)->{
                 LoginViewModel(preferenceViewModel) as T
+            }
+            modelClass.isAssignableFrom(CaptureViewModel::class.java)->{
+                CaptureViewModel(preferenceViewModel) as T
+            }
+            modelClass.isAssignableFrom(MoodResultViewModel::class.java)->{
+                MoodResultViewModel(preferenceViewModel) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

@@ -1,7 +1,9 @@
 package com.example.soundmood.util
 
 import android.util.Log
+import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -17,6 +19,10 @@ class Utility {
                 Log.e("HomePageViewModel", "Error parsing expiryAt: ${e.message}")
                 0L
             }
+        }
+        fun createFile(baseFolder: File, name: String, extension: String): File {
+            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+            return File(baseFolder, "${name}_$timestamp$extension")
         }
     }
 

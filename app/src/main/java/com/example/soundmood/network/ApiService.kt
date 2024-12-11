@@ -1,5 +1,6 @@
 package com.example.soundmood.network
 
+import com.example.soundmood.data.PlaylistResponse
 import com.example.soundmood.data.PredictResponse
 import com.example.soundmood.data.TokenResponse
 import com.example.soundmood.data.UserProfile
@@ -14,12 +15,19 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("me")
     suspend fun getCurrentUser(
         @Header("Authorization") token:String,
     ): Response<UserProfile>
+
+    @GET("me/playlists/{playlist_id}")
+    suspend fun getPlaylistDetail(
+        @Header("Authorization") appToken: String,
+        @Path("playlist_id") playlistId : String
+    ):Response<PlaylistResponse>
 
     @Multipart
     @POST("me/predict")
@@ -34,6 +42,7 @@ interface ApiService {
     suspend fun getAppToken(
         @Field("access_token") accessToken:String
     ):Response<TokenResponse>
+
 
 
 
