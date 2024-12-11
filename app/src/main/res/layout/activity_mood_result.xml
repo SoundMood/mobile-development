@@ -21,16 +21,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_capture_tittle"
+        android:id="@+id/tv_mood_result_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Lets Take a Selfie"
+        android:text="This is The Result!"
         android:textColor="@color/purple"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
+    <TextView
+        android:id="@+id/tv_mood_result_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congratulations, this is your mood!"
+        app:layout_constraintTop_toBottomOf="@id/tv_mood_result_tittle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="-8dp"
+        />
+    <ImageView
+        android:id="@+id/img_mood_result"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        tools:src="@tools:sample/avatars"
+        android:background="@drawable/less_rounded_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_mood_result_desc"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="24dp"
+        android:clipToOutline="true"
+        />
+    <Button
+        android:id="@+id/btn_generate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Genarate"
+        app:layout_constraintTop_toBottomOf="@id/img_mood_result"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
