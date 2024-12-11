@@ -15,6 +15,7 @@ import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
+import com.spotify.sdk.android.auth.BuildConfig
 import com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE
 
 
@@ -22,8 +23,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val requestCodes = 1337
-    private val clientId = "4152b43658be46e092036a77856d0b09"
-    private val redirectUri = "com.example.authorizationtest://callback"
+    private val clientId = com.example.soundmood.BuildConfig.SPOTIFY_CLIENT_ID
+    private val redirectUri = com.example.soundmood.BuildConfig.SPOTIFY_REDIRECT_URI
+
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
     private val preferenceViewModel : PreferenceViewModel by viewModels{

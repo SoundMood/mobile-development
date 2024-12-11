@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Fitur yang digunakan -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -19,11 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoundMood"
         tools:targetApi="31">
+
+        <!-- Activity utama -->
         <activity
-            android:name=".ui.moodplaylistgenerated.MoodPlaylistGeneratedActivity"
+            android:name=".ui.loginpage.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Activity lainnya -->
+        <activity
+            android:name=".ui.moodresultpage.MoodResultActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MoodPlaylistGeneratedActivity"
+            android:name=".ui.moodplaylistgenerated.MoodPlaylistGeneratedActivity"
             android:exported="false" />
         <activity
             android:name=".ui.captureimagepage.CaptureImagePage"
@@ -32,25 +45,12 @@
             android:name=".ui.fragment.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.loginpage.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <data
-                    android:host="callback"
-                    android:scheme="com.example.soundmood" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ui.gettingstartedpage.GettingStartedActivity"
             android:exported="false" />
 
+        <!-- Preloaded fonts -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

@@ -15,15 +15,27 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Tambahkan BuildConfig untuk Spotify Client ID
+        buildConfigField ("String", "SPOTIFY_CLIENT_ID", "\"b9d3146baa9a46b49bf9ddeb22aac967\"")
+        buildConfigField ("String", "SPOTIFY_REDIRECT_URI", "\"com.example.authorizationtest://callback\"")
     }
 
     buildTypes {
+        debug {
+            // Aktifkan BuildConfig pada build type debug
+            buildConfigField ("String", "SPOTIFY_CLIENT_ID", "\"b9d3146baa9a46b49bf9ddeb22aac967\"")
+            buildConfigField ("String", "SPOTIFY_REDIRECT_URI", "\"com.example.authorizationtest://callback\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Aktifkan BuildConfig pada build type release (jika berbeda nilai dapat diatur di sini)
+            buildConfigField ("String", "SPOTIFY_CLIENT_ID", "\"b9d3146baa9a46b49bf9ddeb22aac967\"")
+            buildConfigField ("String", "SPOTIFY_REDIRECT_URI", "\"com.example.authorizationtest://callback\"")
         }
     }
     compileOptions {
@@ -33,8 +45,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
+        buildConfig = true // Aktifkan fitur BuildConfig
     }
 }
 
@@ -70,7 +83,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
 
-    // Datastore,Viewmodel & Livedata
+    // Datastore, ViewModel & LiveData
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
@@ -93,3 +106,6 @@ dependencies {
     implementation(libs.tensorflow.lite)
     implementation(libs.tensorflow.lite.support)
 }
+
+
+
