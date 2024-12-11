@@ -28,14 +28,13 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
 
     private lateinit var viewModel : HomePageViewModel
 
-    private var spotifyAppRemote: SpotifyAppRemote? = null
+//    private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomepagefragmentBinding.inflate(inflater,container,false)
-
         return binding.root
     }
 
@@ -64,5 +63,4 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
         }
 
     }
-
 }
