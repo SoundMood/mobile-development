@@ -7,10 +7,11 @@ import kotlinx.coroutines.launch
 
 class ProfilePageViewModel(private val preferenceViewModel: PreferenceViewModel) : ViewModel() {
     val accessToken = preferenceViewModel.accsessToken
-
-    fun logout(token:String){
+    val appToken = preferenceViewModel.appToken
+    fun logout(){
         viewModelScope.launch {
-            preferenceViewModel.clearAccsessToken(token)
+            preferenceViewModel.clearAccsessToken(accessToken.toString())
+            preferenceViewModel.clearAppToken(appToken.toString())
         }
     }
 }

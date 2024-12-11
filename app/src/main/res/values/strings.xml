@@ -31,4 +31,10 @@
     <string name="homepage_recommendation_title">Recommendation for You</string>
     <string name="image_placeholder">image placeholder</string>
     <string name="user_name">User Name</string>
+    <string name="playlist">playlist</string>
+    <string name="export">export</string>
+    <string name="back">back</string>
+    <string name="here_are_your_playlist">here are your playlist</string>
+    <string name="let_s_take_a_selfie">let\'s take a selfie</string>
+    <string name="tap_the_camera_button_to_take_the_selfie">tap the camera button to take the selfie</string>
 </resources>

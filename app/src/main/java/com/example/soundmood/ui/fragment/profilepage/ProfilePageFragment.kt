@@ -12,7 +12,6 @@ import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.loginpage.LoginActivity
 
 class ProfilePageFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var _binding : FragmentProfilepagefragmentBinding ?=null
     private val binding get() = _binding!!
 
@@ -37,8 +36,7 @@ class ProfilePageFragment : Fragment() {
     }
 
     private fun logout() {
-        val accessToken = profilePageViewModel.accessToken.toString()
-        profilePageViewModel.logout(accessToken)
+        profilePageViewModel.logout()
         navigateToLogin()
     }
 

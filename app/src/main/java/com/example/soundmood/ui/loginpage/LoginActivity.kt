@@ -9,127 +9,118 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import com.example.soundmood.data.PreferenceViewModel
 import com.example.soundmood.databinding.ActivityLoginBinding
+import com.example.soundmood.network.UiState
 import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.fragment.MainActivity
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
-import com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE
 
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val requestCodes = 1337
-    private val clientId = "4152b43658be46e092036a77856d0b09"
-    private val redirectUri = "com.example.authorizationtest://callback"
     private var spotifyAppRemote: SpotifyAppRemote? = null
+    
 
-    private val preferenceViewModel : PreferenceViewModel by viewModels{
+    // Companion Object
+    companion object{
+        const val TAG = "TAG"
+        const val REQUESTCODE = 1337
+        const val CLIENTID = "4152b43658be46e092036a77856d0b09"
+        const val REDIRECTURI = "com.example.authorizationtest://callback"
+    }
+
+    // loginViewModel inisialisasi
+    private val viewModel : LoginViewModel by viewModels {
         ViewModelFactory(applicationContext)
     }
 
-
+    // PreferenceViewModel inisialisasi
+    private val preferenceViewModel : PreferenceViewModel by viewModels {
+        ViewModelFactory(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Observe access token dari PreferenceViewModel
         preferenceViewModel.accsessToken.asLiveData().observe(this){token->
-            if(token.isNullOrEmpty()){
-                Log.d("LoginPage","Token is Null!")
-            }else{
-                // Ke main activity
+            if(!token.isNullOrEmpty()) {
                 navigateMain()
+            }else{
+                // Handle tombol login
+                binding.btnLogin.setOnClickListener {
+                    startSpotifyLogin()
+                }
             }
         }
-
-        // Coba Auth ke akun Spotify
-        binding.btnLogin.setOnClickListener {
-            loginWithSpotify()
-        }
-
+        // Untuk observe state LoginViewModel
+        observeViewModel()
     }
 
-    private fun loginWithSpotify(){
-
-        val accessToken = getAccessToken()
-        if (accessToken != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-        }else{
-            val auth = AuthorizationRequest.Builder(
-                clientId,
-                AuthorizationResponse.Type.TOKEN,
-                redirectUri
-            )
-
-            auth.setScopes(arrayOf(
-                "user-read-private",
-                "user-read-email",
-                "user-read-currently-playing"
-            ))
-
-            val request = auth.build()
-
-            try {
-                Log.d("SpotifyAuth", "Attempting to open login activity")
-                AuthorizationClient.openLoginActivity(this, requestCodes, request)
-            } catch (e: Exception) {
-                Log.e("SpotifyAuth", "Error opening login activity", e)
-                Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
+    private fun observeViewModel(){
+        Log.d("TAG", "Observe View Model")
+        viewModel.uiState.observe(this){state->
+            when(state){
+                is UiState.Loading ->
+                {
+                    Log.d("TAG","Loading Occurred")
+//                    showToast("Loading")
+                }
+                is UiState.Success -> {
+                    Log.d("TAG","Navigate to Main")
+                    navigateMain()
+                }
+                is UiState.Error -> {
+                    Log.e("TAG","Error Occurred")
+                }
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    // Fungsi handle tombol login
+    private fun startSpotifyLogin(){
+        Log.d("TAG", "Start Spotify Login")
+        val auth = AuthorizationRequest.Builder(
+            CLIENTID,
+            AuthorizationResponse.Type.TOKEN,
+            REDIRECTURI
+        ).setScopes(arrayOf("user-read-private", "user-read-email", "user-read-currently-playing"))
+            .build()
+        AuthorizationClient.openLoginActivity(this, REQUESTCODE,auth)
+    }
+
+
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        Log.d("SpotifyAuth", "onActivityResult called. RequestCode: $requestCode")
-
-        if (requestCode == requestCodes) {
-            val response = AuthorizationClient.getResponse(resultCode, data)
-
-            when (response.type) {
-                AuthorizationResponse.Type.TOKEN -> {
-                    val accessToken = response.accessToken
-                    Log.d("SpotifyAuth", "Token received: $accessToken")
-
-                    // Simpan access token pada datastore
-                    saveAccessToken(accessToken)
-                    Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-
-                    // Ke main activity
-                   navigateMain()
-                }
-                AuthorizationResponse.Type.ERROR -> {
-                    Log.e("SpotifyAuth", "Error: ${response.error}")
-                    Toast.makeText(this, "Login Error: ${response.error}", Toast.LENGTH_LONG).show()
-                }
-                else -> {
-                    Log.e("SpotifyAuth", "Unexpected response type")
-                    Toast.makeText(this, "Unexpected login response", Toast.LENGTH_SHORT).show()
-                }
-            }
+        Log.d("TAG", "onActivity Result")
+        if(requestCode== REQUESTCODE){
+            val response = AuthorizationClient.getResponse(resultCode,data)
+            Log.d(TAG,"OnActivityResult Occured and Try Handle Response")
+            viewModel.handleSpotifyResponse(response)
         }
     }
 
-    private fun saveAccessToken(accessToken: String) {
-        preferenceViewModel.saveAccsessToken(accessToken)
-    }
-
-    private fun getAccessToken():String?{
-        var accessToken:String? =null
-        preferenceViewModel.accsessToken.asLiveData().observe(this){token->
-            accessToken = token
-        }
-        return accessToken
-    }
-
+    // Fungsi intent ke MainActivity (Homepage)
     private fun navigateMain(){
+        Log.d("TAG", "Navigate Main")
         startActivity(Intent(this@LoginActivity,MainActivity::class.java))
         finish()
     }
 
+    // Untuk menampilkan Toast
+//    private fun showToast(message:String){
+//        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+//    }
+    
 }
