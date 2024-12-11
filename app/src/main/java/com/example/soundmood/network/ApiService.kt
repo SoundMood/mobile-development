@@ -25,8 +25,8 @@ interface ApiService {
     @POST("me/predict")
     suspend fun generatePlaylist(
         @Header("Authorization") appToken: String,
-        @Part("access_token") accessToken: String,
-        @Part image:MultipartBody.Part
+        @Part image:MultipartBody.Part,
+        @Part accessToken: MultipartBody.Part
     ) : Response<PredictResponse>
 
     @FormUrlEncoded

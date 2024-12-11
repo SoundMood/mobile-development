@@ -12,11 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.soundmood.data.PreferenceViewModel
@@ -169,18 +166,20 @@ class CaptureImagePage : AppCompatActivity() {
             val requestFile = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
 
-            val token = preferenceViewModel.appToken.toString()
-            val accessToken = preferenceViewModel.accsessToken.toString()
+            val token = preferenceViewModel.appToken.firstOrNull()
+            val accessToken = preferenceViewModel.accsessToken.firstOrNull()
 
-            val response = ApiConfig.getApiService().generatePlaylist(
-                appToken = token,
-                accessToken = accessToken,
+            val accessTokenPart = MultipartBody.Part.createFormData("access_token",accessToken.toString())
+
+            val response = ApiConfig.getSelfApi().generatePlaylist(
+                appToken = "Bearer $token",
+                accessToken = accessTokenPart,
                 image = imagePart
             )
 
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@CaptureImagePage, "API Response: ${response.body()?.mood}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CaptureImagePage, "API Response: ${response.body()?.playlistId}", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Log.e("CaptureImagePage", "API Error: ${response.code()} - ${response.message()}")
