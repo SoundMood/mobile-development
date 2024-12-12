@@ -45,11 +45,23 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="-8dp"
         />
+    <Button
+        android:id="@+id/btn_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_playlist_desc"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:text="@string/export"
+        app:icon="@drawable/export"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrack"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_playlist_desc"
+        app:layout_constraintTop_toBottomOf="@id/btn_export"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp"
@@ -57,7 +69,6 @@
         android:layout_marginRight="24dp"
         />
     <ProgressBar
-
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
