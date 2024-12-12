@@ -29,9 +29,9 @@ class CaptureViewModel(private val preferenceViewModel: PreferenceViewModel): Vi
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun compressImage(imageFile: File, context: Context, onCompressed: (File) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
+//    fun compressImage(imageFile: File, context: Context, onCompressed: (File) -> Unit) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            try {
 //                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
 //                val outputStream = ByteArrayOutputStream()
 //                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
@@ -45,50 +45,60 @@ class CaptureViewModel(private val preferenceViewModel: PreferenceViewModel): Vi
 //                val fileSize = compressedFile.length()/1024
 //                Log.d("CaptureViewModel","Compressed File $fileSize")
 //
-//                if(fileSize in 1..200){
-//                    withContext(Dispatchers.Main) {
-//                        onCompressed(compressedFile)
-//                    }
-//                }else{
-//                    Log.d("CaptureViewModel","FileSize more than 200kb")
+//                withContext(Dispatchers.Main) {
+//                    onCompressed(compressedFile)
 //                }
-                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                val outputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
+////                // tes
+////                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+////                val outputStream = ByteArrayOutputStream()
+////                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
+////
+////                val compressedFile = createFile(context.cacheDir, "COMPRESSED_IMG_${System.currentTimeMillis()}", ".jpg")
+////                val fos = FileOutputStream(compressedFile)
+////                fos.write(outputStream.toByteArray())
+////                fos.flush()
+////                fos.close()
+////
+////                val fileSize = compressedFile.length()/1024
+////                Log.d("CaptureViewModel","Compressed File $fileSize")
+////
+////                onCompressed(compressedFile)
+//            } catch (e: Exception) {
+//                Log.e("CaptureViewModel", "Compression failed: ${e.message}", e)
+//                withContext(Dispatchers.Main) {
+//                    _errorMessage.value = "Compression failed: ${e.message}"
+//                }
+//            }
+//        }
+//    }
 
-                var quality = 75 // Mulai dengan kualitas 75
-                var compressedFile: File
-                var fileSize: Long
 
-                do {
-                    // Kompres gambar dengan kualitas yang diatur
-                    outputStream.reset() // Reset output stream sebelum menulis ulang
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
-
-                    // Membuat file untuk gambar terkompresi
-                    compressedFile = createFile(context.cacheDir, "RESIZED_IMG_${System.currentTimeMillis()}", ".jpg")
-                    val fos = FileOutputStream(compressedFile)
-                    fos.write(outputStream.toByteArray())
-                    fos.flush()
-                    fos.close()
-
-                    // Mendapatkan ukuran file dalam KB
-                    fileSize = compressedFile.length() / 1024
-
-                    // Jika ukuran file lebih besar dari 500 KB, kurangi kualitasnya
-                    quality -= 5
-                    Log.d("CaptureViewModel", "Compressed File Size: $fileSize KB at quality $quality")
-
-                } while (fileSize > 500 && quality > 5) // Teruskan hingga ukuran file kurang dari 500 KB atau kualitas mencapai 5%
-
-                if (fileSize <= 500) {
-                    withContext(Dispatchers.Main) {
-                        onCompressed(compressedFile)
-                    }
-                } else {
-                    Log.d("CaptureViewModel", "Failed to compress below 500KB")
+    fun compressImage(imageFile: File, context: Context, onCompressed: (File) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val options = BitmapFactory.Options().apply {
+                    inJustDecodeBounds = true
+                    BitmapFactory.decodeFile(imageFile.absolutePath, this)
+                    inSampleSize = calculateInSampleSize(this, 800, 800) // Target resolusi 800x800
+                    inJustDecodeBounds = false
                 }
 
+                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
+                val outputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 60, outputStream) // Ubah kualitas ke 60
+
+                val compressedFile = createFile(context.cacheDir, "COMPRESSED_IMG_${System.currentTimeMillis()}", ".jpg")
+                val fos = FileOutputStream(compressedFile)
+                fos.write(outputStream.toByteArray())
+                fos.flush()
+                fos.close()
+
+                val fileSize = compressedFile.length() / 1024
+                Log.d("CaptureViewModel", "Compressed File ${fileSize}KB")
+
+                withContext(Dispatchers.Main) {
+                    onCompressed(compressedFile)
+                }
             } catch (e: Exception) {
                 Log.e("CaptureViewModel", "Compression failed: ${e.message}", e)
                 withContext(Dispatchers.Main) {
@@ -97,6 +107,23 @@ class CaptureViewModel(private val preferenceViewModel: PreferenceViewModel): Vi
             }
         }
     }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val (height: Int, width: Int) = options.outHeight to options.outWidth
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+
+        return inSampleSize
+    }
+
 
     fun sendImageToAPI(imageFile: File) {
         viewModelScope.launch {

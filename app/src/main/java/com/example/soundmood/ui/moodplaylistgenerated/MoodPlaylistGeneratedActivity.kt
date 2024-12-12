@@ -1,6 +1,7 @@
 package com.example.soundmood.ui.moodplaylistgenerated
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,6 +25,6 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val musicList = intent.getStringArrayListExtra(EXTRA_MUSIC_LIST)
-
+        Toast.makeText(this@MoodPlaylistGeneratedActivity,"$musicList",Toast.LENGTH_SHORT).show()
     }
 }
