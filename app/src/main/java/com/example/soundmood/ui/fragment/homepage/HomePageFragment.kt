@@ -2,6 +2,7 @@ package com.example.soundmood.ui.fragment.homepage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,6 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
     private val binding get() = _binding!!
 
     private lateinit var viewModel : HomePageViewModel
-
 //    private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun onCreateView(
@@ -46,6 +46,11 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
         viewModel.userName.observe(viewLifecycleOwner){userName->
             binding.textviewUsername.text = userName
         }
+        val intent = Intent(requireContext(), CaptureImagePage::class.java)
+        viewModel.userId.observe(viewLifecycleOwner){userId->
+            intent.putExtra("user_id", userId)
+        }
+
 
         viewModel.userImageProfile.observe(viewLifecycleOwner){ imageUrl->
             Glide.with(requireContext())
@@ -62,7 +67,7 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
         }
 
         binding.btnGenerateplaylist.setOnClickListener{
-            startActivity(Intent(requireContext(),CaptureImagePage::class.java))
+            startActivity(intent)
         }
 
         binding.imageviewProfile.setOnClickListener{

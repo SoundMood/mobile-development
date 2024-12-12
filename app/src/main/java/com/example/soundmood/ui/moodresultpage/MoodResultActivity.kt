@@ -3,10 +3,10 @@ package com.example.soundmood.ui.moodresultpage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.soundmood.R
 import com.example.soundmood.databinding.ActivityMoodResultBinding
@@ -32,6 +32,7 @@ class MoodResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val playlistId = intent.getStringExtra("PLAYLIST_ID")
+        val userId = intent.getStringExtra("USER_ID")
         if(playlistId!=null){
             lifecycleScope.launch {
                 fetchPlaylistDetails(playlistId)
@@ -41,16 +42,24 @@ class MoodResultActivity : AppCompatActivity() {
         }
         moodResultViewModel.loading.observe(this){loading->
             if(loading){
-                binding.progressBar.visibility = android.view.View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
             }else{
-                binding.progressBar.visibility = android.view.View.GONE
+                binding.progressBar.visibility = View.GONE
             }
         }
-
         observeMood()
 
         binding.btnGenerate.setOnClickListener {
-            navigateMoodPlaylistGenerated()
+            val musicList = moodResultViewModel.musicList.value
+            if (musicList!=null){
+                val intent = Intent(this,MoodPlaylistGeneratedActivity::class.java)
+                intent.putStringArrayListExtra(EXTRA_MUSIC_LIST, ArrayList(musicList))
+                intent.putExtra("USER_ID",userId)
+
+                startActivity(intent)
+            }else{
+                Log.d(TAG,"Music list empty.")
+            }
         }
     }
 
@@ -72,14 +81,7 @@ class MoodResultActivity : AppCompatActivity() {
     }
 
     private fun navigateMoodPlaylistGenerated() {
-        val musicList = moodResultViewModel.musicList.value
-        if (musicList!=null){
-            val intent = Intent(this,MoodPlaylistGeneratedActivity::class.java)
-            intent.putStringArrayListExtra(EXTRA_MUSIC_LIST, ArrayList(musicList))
-            startActivity(intent)
-        }else{
-            Log.d(TAG,"Music list empty.")
-        }
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.soundmood.ui.moodplaylistgenerated
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.soundmood.R
 import com.example.soundmood.databinding.ActivityMoodPlaylistGeneratedBinding
 import com.example.soundmood.ui.ViewModelFactory
+import com.example.soundmood.ui.fragment.MainActivity
 import com.example.soundmood.ui.moodresultpage.MoodResultActivity.Companion.EXTRA_MUSIC_LIST
 import kotlinx.coroutines.launch
 
@@ -54,6 +56,9 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
         }
 
         observeTracks()
+        binding.btnExport.setOnClickListener {
+            createSpotifyPlaylist()
+        }
     }
 
     private fun observeTracks() {
@@ -65,5 +70,29 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
 
     private suspend fun fetchMusic(musicList: ArrayList<String>) {
         moodPlaylistGeneratedViewModel.setMusicList(musicList)
+    }
+
+    private fun createSpotifyPlaylist(){
+        val musicList = moodPlaylistGeneratedViewModel.musicList.value
+        val userId = intent.getStringExtra("USER_ID")
+        Log.d(TAG,"$userId")
+        if (userId != null) {
+            moodPlaylistGeneratedViewModel.createSpotifyPlaylist(userId,"SoundMood")
+        }
+        moodPlaylistGeneratedViewModel.spotifyPlaylistId.observe(this){playlistId->
+            if(playlistId!=null){
+                val trackUris = moodPlaylistGeneratedViewModel.tracks.value?.map { it.uri } ?: emptyList()
+                moodPlaylistGeneratedViewModel.addTracksToPlaylist(playlistId, trackUris)
+                Log.d(TAG,"$playlistId")
+                Toast.makeText(this@MoodPlaylistGeneratedActivity,"Playlist Exported",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@MoodPlaylistGeneratedActivity, MainActivity::class.java))
+                finish()
+            }
+        }
+        moodPlaylistGeneratedViewModel.errorMessage.observe(this){errorMessage->
+            if(errorMessage!=null){
+                Toast.makeText(this@MoodPlaylistGeneratedActivity,errorMessage,Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
