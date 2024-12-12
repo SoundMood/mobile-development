@@ -37,4 +37,7 @@
     <string name="here_are_your_playlist">here are your playlist</string>
     <string name="let_s_take_a_selfie">let\'s take a selfie</string>
     <string name="tap_the_camera_button_to_take_the_selfie">tap the camera button to take the selfie</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="track_name">Track Name</string>
+    <string name="play">Play</string>
 </resources>

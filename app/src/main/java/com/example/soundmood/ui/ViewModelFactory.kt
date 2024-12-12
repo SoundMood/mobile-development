@@ -11,6 +11,7 @@ import com.example.soundmood.ui.captureimagepage.CaptureViewModel
 import com.example.soundmood.ui.fragment.homepage.HomePageViewModel
 import com.example.soundmood.ui.fragment.profilepage.ProfilePageViewModel
 import com.example.soundmood.ui.loginpage.LoginViewModel
+import com.example.soundmood.ui.moodplaylistgenerated.MoodPlaylistGeneratedViewModel
 import com.example.soundmood.ui.moodresultpage.MoodResultViewModel
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -36,6 +37,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             }
             modelClass.isAssignableFrom(MoodResultViewModel::class.java)->{
                 MoodResultViewModel(preferenceViewModel) as T
+            }
+            modelClass.isAssignableFrom(MoodPlaylistGeneratedViewModel::class.java)->{
+                MoodPlaylistGeneratedViewModel(preferenceViewModel) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

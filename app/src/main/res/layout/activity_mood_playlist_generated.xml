@@ -46,6 +46,7 @@
         android:layout_marginTop="-8dp"
         />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTrack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_playlist_desc"
