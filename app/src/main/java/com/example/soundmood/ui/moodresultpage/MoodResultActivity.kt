@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.example.soundmood.R
 import com.example.soundmood.databinding.ActivityMoodResultBinding
 import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.moodplaylistgenerated.MoodPlaylistGeneratedActivity
@@ -56,7 +57,13 @@ class MoodResultActivity : AppCompatActivity() {
     private fun observeMood() {
         moodResultViewModel.mood.observe(this) { mood ->
             if (mood != null) {
-                Log.d(TAG, "Mood: $mood")
+                when(mood){
+                    "angry"->binding.imgMoodResult.setImageResource(R.drawable.angry)
+                    "happy"->binding.imgMoodResult.setImageResource(R.drawable.happy)
+                    "neutral"->binding.imgMoodResult.setImageResource(R.drawable.neutral)
+                    "sad"->binding.imgMoodResult.setImageResource(R.drawable.sad)
+                    "surprised"->binding.imgMoodResult.setImageResource(R.drawable.surprised)
+                }
                 Toast.makeText(this@MoodResultActivity,"Mood : $mood",Toast.LENGTH_SHORT).show()
             } else {
                 Log.d(TAG, "Mood is null or not set yet.")
