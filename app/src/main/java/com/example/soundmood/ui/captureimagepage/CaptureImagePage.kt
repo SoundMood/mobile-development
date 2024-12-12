@@ -105,7 +105,7 @@ class CaptureImagePage : AppCompatActivity(){
 
     private fun takePhoto() {
         val photoFile = createFile(applicationContext.cacheDir, "IMG", ".jpg")
-
+        binding.progressBar.visibility= android.view.View.VISIBLE
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture.takePicture(
             outputOptions,
@@ -125,6 +125,7 @@ class CaptureImagePage : AppCompatActivity(){
                             finish()
                         }
                     }
+                    binding.progressBar.visibility= android.view.View.GONE
 
 
                 }
@@ -132,6 +133,7 @@ class CaptureImagePage : AppCompatActivity(){
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(this@CaptureImagePage, "Photo capture failed: ${exception.message}", Toast.LENGTH_SHORT).show()
                     Log.e("CaptureImagePage", "Photo capture failed", exception.cause)
+                    binding.progressBar.visibility= android.view.View.GONE
                 }
 
 
