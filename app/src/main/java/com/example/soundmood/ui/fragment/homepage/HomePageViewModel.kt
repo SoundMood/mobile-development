@@ -38,6 +38,9 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
     private var isAppTokenBeingFetched = false
     private var isUserProfileBeingFetched = false
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean> get() = _isLoading
+
     init{
         viewModelScope.launch {
             if(accessToken.isNullOrEmpty() || appToken.isNullOrEmpty()){
@@ -119,10 +122,12 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
 
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 val authHeader = "Bearer $accessToken"
                 val response = ApiConfig.getApiService().getCurrentUser(authHeader)
 
                 if (response.isSuccessful && response.body() != null) {
+                    _isLoading.value = false
                     val userProfile = response.body()!!
                     _userName.value = userProfile.displayName ?: "Unknown User"
                     _userImageProfile.value = userProfile.images?.firstOrNull()?.url ?: ""
@@ -130,9 +135,11 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
                     isDataLoaded = true
                 }
             } catch (e : Exception){
+                _isLoading.value = false
                 Log.e("HomePageViewModel","${e.message}")
                 _error.value = "Exception : ${e.message}"
             } finally {
+                _isLoading.value = false
                 isUserProfileBeingFetched = false
             }
         }

@@ -45,6 +45,13 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
         }else{
             Log.d(TAG,"Music list is null")
         }
+        moodPlaylistGeneratedViewModel.loading.observe(this) { loading ->
+            if (loading) {
+                binding.progressBar.visibility = android.view.View.VISIBLE
+            } else {
+                binding.progressBar.visibility = android.view.View.GONE
+            }
+        }
 
         observeTracks()
     }

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.soundmood.data.TracksItem
-import com.example.soundmood.databinding.HorizontalItemTrackBinding
+import com.example.soundmood.databinding.CardviewListBinding
 
 class RecyclerViewAdapter(private val tracks:List<TracksItem>):RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-    class RecyclerViewHolder(private val binding : HorizontalItemTrackBinding):RecyclerView.ViewHolder(binding.root) {
+    class RecyclerViewHolder(private val binding : CardviewListBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(track:TracksItem){
             binding.apply {
                 tvTrackName.text = track.name
@@ -28,7 +28,7 @@ class RecyclerViewAdapter(private val tracks:List<TracksItem>):RecyclerView.Adap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val binding = HorizontalItemTrackBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = CardviewListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return RecyclerViewHolder(binding)
     }
 

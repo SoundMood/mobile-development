@@ -17,6 +17,9 @@ class MoodPlaylistGeneratedViewModel(private val preferenceViewModel: Preference
     private val _tracks = MutableLiveData<List<TracksItem>>()
     val tracks : LiveData<List<TracksItem>> = _tracks
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading : LiveData<Boolean> = _loading
+
     companion object{
         const val TAG = "MoodPlaylistGeneratedViewModel"
     }
@@ -30,14 +33,17 @@ class MoodPlaylistGeneratedViewModel(private val preferenceViewModel: Preference
     private suspend fun fetchMusicDetail(musicListString: String) {
         val accessToken = preferenceViewModel.accsessToken.firstOrNull().toString()
         try {
+            _loading.value = true
             val response = ApiConfig.getApiService().getTracks("Bearer $accessToken",musicListString)
             if(response.isSuccessful && response.body() !=null){
+                _loading.value = false
                 val trackList = response.body()?.tracks?.filterNotNull()?: emptyList()
                 Log.d(TAG,"$trackList")
                 _tracks.value = trackList
             }
 
         }catch (e:Exception){
+            _loading.value = false
             Log.e(TAG,"Error message : ${e.message}")
         }
     }

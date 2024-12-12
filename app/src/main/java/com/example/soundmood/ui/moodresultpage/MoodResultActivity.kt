@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.soundmood.databinding.ActivityMoodResultBinding
 import com.example.soundmood.ui.ViewModelFactory
@@ -36,6 +37,13 @@ class MoodResultActivity : AppCompatActivity() {
             }
         }else{
             Log.d(TAG,"There is no Playlist ID")
+        }
+        moodResultViewModel.loading.observe(this){loading->
+            if(loading){
+                binding.progressBar.visibility = android.view.View.VISIBLE
+            }else{
+                binding.progressBar.visibility = android.view.View.GONE
+            }
         }
 
         observeMood()

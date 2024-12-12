@@ -53,6 +53,13 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
                 .circleCrop()
                 .into(binding.imageviewProfile)
         }
+        viewModel.isLoading.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
+        }
 
         binding.btnGenerateplaylist.setOnClickListener{
             startActivity(Intent(requireContext(),CaptureImagePage::class.java))
