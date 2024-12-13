@@ -43,7 +43,6 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 fetchMusic(musicList)
             }
-            Toast.makeText(this@MoodPlaylistGeneratedActivity,"$musicList",Toast.LENGTH_SHORT).show()
         }else{
             Log.d(TAG,"Music list is null")
         }
@@ -86,7 +85,6 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
                 val trackUris = moodPlaylistGeneratedViewModel.tracks.value?.map { it.uri } ?: emptyList()
                 moodPlaylistGeneratedViewModel.addTracksToPlaylist(playlistId, trackUris)
                 Log.d(TAG,"$playlistId")
-                Toast.makeText(this@MoodPlaylistGeneratedActivity,"Playlist Exported",Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@MoodPlaylistGeneratedActivity, MainActivity::class.java))
                 finish()
             }

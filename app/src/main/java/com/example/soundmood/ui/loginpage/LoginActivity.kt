@@ -1,5 +1,7 @@
 package com.example.soundmood.ui.loginpage
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -47,6 +49,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         // Observe access token dari PreferenceViewModel
         preferenceViewModel.accsessToken.asLiveData().observe(this){token->
             if(!token.isNullOrEmpty()) {
@@ -55,12 +59,17 @@ class LoginActivity : AppCompatActivity() {
                 // Handle tombol login
                 binding.btnLogin.setOnClickListener {
                     startSpotifyLogin()
+
                 }
             }
         }
         // Untuk observe state LoginViewModel
         observeViewModel()
     }
+
+
+
+
 
     private fun observeViewModel(){
         Log.d("TAG", "Observe View Model")
@@ -129,10 +138,5 @@ class LoginActivity : AppCompatActivity() {
         startActivity(Intent(this@LoginActivity,MainActivity::class.java))
         finish()
     }
-
-    // Untuk menampilkan Toast
-//    private fun showToast(message:String){
-//        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-//    }
     
 }

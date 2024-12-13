@@ -92,7 +92,6 @@ class MoodResultActivity : AppCompatActivity() {
                         binding.tvmoodresult.text = mood
                     }
                 }
-                Toast.makeText(this@MoodResultActivity,"Mood : $mood",Toast.LENGTH_SHORT).show()
             } else {
                 Log.d(TAG, "Mood is null or not set yet.")
             }
