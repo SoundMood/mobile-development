@@ -21,7 +21,7 @@ import com.example.soundmood.ui.fragment.profilepage.ProfilePageFragment
 import com.spotify.android.appremote.api.SpotifyAppRemote
 
 
-class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
+class HomePageFragment : Fragment() {
 
 
     private var _binding : FragmentHomepagefragmentBinding? = null
