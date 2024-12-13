@@ -81,8 +81,12 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
                 viewModel.getSeveralAlbum()
             }
         }
+        val intent=Intent(requireContext(),CaptureImagePage::class.java)
+        viewModel.userId.observe(viewLifecycleOwner){userId->
+            intent.putExtra("user_id",userId)
+        }
         binding.btnGenerateplaylist.setOnClickListener{
-            startActivity(Intent(requireContext(),CaptureImagePage::class.java))
+            startActivity(intent)
         }
 
         binding.imageviewProfile.setOnClickListener{
