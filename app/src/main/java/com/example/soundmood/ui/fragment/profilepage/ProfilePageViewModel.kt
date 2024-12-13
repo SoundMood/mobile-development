@@ -14,4 +14,11 @@ class ProfilePageViewModel(private val preferenceViewModel: PreferenceViewModel)
             preferenceViewModel.clearAppToken(appToken.toString())
         }
     }
+    val getTheme = preferenceViewModel.darkMode
+    fun saveTheme(isDarkMode : Boolean){
+        viewModelScope.launch {
+            preferenceViewModel.saveDarkMode(isDarkMode)
+        }
+    }
+
 }

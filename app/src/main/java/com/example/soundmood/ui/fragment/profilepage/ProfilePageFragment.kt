@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.soundmood.databinding.FragmentProfilepagefragmentBinding
 import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.loginpage.LoginActivity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class ProfilePageFragment : Fragment() {
     private var _binding : FragmentProfilepagefragmentBinding ?=null
@@ -24,6 +28,16 @@ class ProfilePageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfilepagefragmentBinding.inflate(inflater,container,false)
+        val swithTheme = binding.switchTheme
+        lifecycleScope.launchWhenStarted {
+            profilePageViewModel.getTheme.collect { isDarkMode ->
+                swithTheme.isChecked = isDarkMode
+                applyTheme(isDarkMode)
+            }
+        }
+        swithTheme.setOnCheckedChangeListener { _, isChecked ->
+            profilePageViewModel.saveTheme(isChecked)
+        }
         return binding.root
     }
 
@@ -33,6 +47,14 @@ class ProfilePageFragment : Fragment() {
         binding.linearlayoutLogout.setOnClickListener {
             logout()
         }
+    }
+    private fun applyTheme(isDarkMode: Boolean) {
+        val mode = if (isDarkMode) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     private fun logout() {
