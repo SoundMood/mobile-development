@@ -20,9 +20,7 @@ class RecyclerViewAdapter(private val tracks:List<TracksItem>):RecyclerView.Adap
                     .load(imageUrl)
                     .into(ivAlbumCover)
 
-                btnPlay.setOnClickListener{
-                    Log.d("MoodPlaylistGeneratedActivity","Music Played")
-                }
+
             }
         }
     }

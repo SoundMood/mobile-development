@@ -45,57 +45,6 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
     }
 
 
-
-//    fun getRecommendationPlaylist() {
-//        if (isDataLoaded) return
-//        if (accessToken.isNullOrEmpty()) {
-//            _error.value = "Access token is not available!"
-//            return
-//        }
-//
-//        viewModelScope.launch {
-//            val playlistIdsToFetch = playlistIds.shuffled().take(6).toMutableList()
-//            playlistIdsToFetch[0] = "4TsQjExApECc0uy8OYmYgo"
-//            Log.d("HomePageViewModel","Access Token : $accessToken")
-//            try {
-//                val response = playlistIdsToFetch.map { playlistId ->
-//                    async {
-//                        try {
-//                            val result = ApiConfig.getApiService().getPlaylist("Bearer $accessToken", playlistId)
-//                            Log.d("HomePageViewModel", "Response for playlist $playlistId: ${result.code()} - ${result.message()} - ${result.raw()}") // Log response status
-//                            if (result.isSuccessful) {
-//                                Log.d("HomePageViewModel", "Playlist $playlistId body: ${result.body()}")
-//                            } else {
-//                                Log.e("HomePageViewModel", "Error fetching playlist $playlistId: ${result.errorBody()?.string()}")
-//                            }
-//                            result
-//                        } catch (e: Exception) {
-//                                Log.e("HomePageViewModel", "Exception fetching playlist $playlistId: ${e.message}")
-//                            throw e
-//                        }
-//                    }
-//
-//                }
-//                val results = response.awaitAll()
-//                val playlists = results.mapNotNull { result ->
-//                    if (result.isSuccessful) {
-//                        result.body()
-//                    } else {
-//                        _error.postValue("Error loading playlist: ${result.message()}")
-//                        null
-//                    }
-//                }
-//                withContext(Dispatchers.Main) {
-//                    Log.d("HomePageViewModel","Final playlist response $playlists")
-//                    _recommendationPlaylists.value = playlists
-//                    isDataLoaded = true
-//                }
-//            } catch (e: Exception) {
-//                _error.value = "Exception: ${e.message}"
-//            }
-//        }
-//    }
-
     private fun loadInitialData() {
         viewModelScope.launch {
             accessToken = preferenceViewModel.accsessToken.firstOrNull()

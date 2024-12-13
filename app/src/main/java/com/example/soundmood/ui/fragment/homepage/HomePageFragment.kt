@@ -5,20 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.soundmood.R
 import com.example.soundmood.databinding.FragmentHomepagefragmentBinding
 import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.captureimagepage.CaptureImagePage
 import com.example.soundmood.ui.fragment.profilepage.ProfilePageFragment
-import com.spotify.android.appremote.api.SpotifyAppRemote
 
 
 class HomePageFragment : Fragment() {
@@ -31,7 +28,6 @@ class HomePageFragment : Fragment() {
         ViewModelFactory(requireContext().applicationContext)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +38,6 @@ class HomePageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val adapter  = HomePageAdapter(mutableListOf())
         val gridLayoutManager = GridLayoutManager(requireContext(),3)
@@ -56,6 +51,32 @@ class HomePageFragment : Fragment() {
             adapter.updateData(playlists)
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+
+        observeViewModel()
+
+        binding.imageviewProfile.setOnClickListener {
+            val userId = viewModel.userId.value ?: ""
+            val userName = viewModel.userName.value ?: ""
+            val userImage = viewModel.userImageProfile.value ?: ""
+
+            val bundle = Bundle().apply {
+                putString("user_id", userId)
+                putString("user_name", userName)
+                putString("user_image", userImage.toString())
+            }
+            findNavController().navigate(R.id.profilePageFragment,bundle)
+
+        }
+    }
+
+    fun observeViewModel(){
         viewModel.userName.observe(viewLifecycleOwner){userName->
             binding.textviewUsername.text = userName
         }
@@ -68,30 +89,34 @@ class HomePageFragment : Fragment() {
                 .into(binding.imageviewProfile)
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner){isLoading->
-            if(isLoading){
-                binding.progressBar.visibility = View.VISIBLE
-            }else{
-                binding.progressBar.visibility = View.GONE
-            }
-        }
-
         viewModel.userName.observe(viewLifecycleOwner){userName->
             if(!userName.isNullOrEmpty()){
                 viewModel.getSeveralAlbum()
             }
         }
+
         val intent=Intent(requireContext(),CaptureImagePage::class.java)
         viewModel.userId.observe(viewLifecycleOwner){userId->
             intent.putExtra("user_id",userId)
         }
+
+
         binding.btnGenerateplaylist.setOnClickListener{
             startActivity(intent)
         }
 
-        binding.imageviewProfile.setOnClickListener{
-           findNavController().navigate(R.id.profilePageFragment)
-        }
+        binding.ivMood1.setImageDrawable(
+            ContextCompat.getDrawable(requireContext(),R.drawable.happy)
+        )
+        binding.ivMood2.setImageDrawable(
+            ContextCompat.getDrawable(requireContext(),R.drawable.sad)
+        )
+        binding.ivMood3.setImageDrawable(
+            ContextCompat.getDrawable(requireContext(),R.drawable.neutral)
+        )
 
+        binding.tvMood1.text = getString(R.string.happy)
+        binding.tvMood2.text = getString(R.string.sad)
+        binding.tvMood3.text = getString(R.string.neutral)
     }
 }

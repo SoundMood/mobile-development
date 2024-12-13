@@ -10,12 +10,13 @@
 
     <Button
         android:id="@+id/btn_back"
-        android:layout_width="110dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
         android:background="@drawable/back_butt_shape"
         android:gravity="center"
+        style="@style/CustomBackButton"
         android:text="@string/back"
         app:icon="@drawable/baseline_arrow_back_24"
         app:iconGravity="textStart"
@@ -26,12 +27,10 @@
         android:id="@+id/tv_capture_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Lets Take a Selfie"
-        android:textColor="@color/purple"
-        android:textSize="24sp"
+        style="@style/TitleTextStyle"
+        android:text="@string/lets_take_a_selfie"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
@@ -39,11 +38,10 @@
         android:id="@+id/tv_capture_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="-8dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Tap the Camera Button to Take Selfie"
-        android:textSize="12sp"
+        android:text="@string/tap_the_camera_button_to_take_selfie"
+        style="@style/SubTitleTextStyle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_capture_tittle" />
 
@@ -66,8 +64,6 @@
         android:src="@drawable/cam"
         android:id="@+id/capture_button"
         app:layout_constraintTop_toTopOf="@id/guideline"
-
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

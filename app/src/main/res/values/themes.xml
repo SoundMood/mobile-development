@@ -12,4 +12,42 @@
         <item name="backgroundColor">@color/purple</item>
     </style>
 
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/purple</item> <!-- Warna latar belakang -->
+        <item name="cornerRadius">15dp</item> <!-- Sudut membulat -->
+        <item name="android:textColor">@android:color/white</item> <!-- Warna teks -->
+        <item name="android:textSize">16sp</item> <!-- Ukuran teks -->
+        <item name="android:fontFamily">@font/poppins_bold</item> <!-- Font -->
+    </style>
+
+    <style name="CustomBackButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/purple</item> <!-- Warna latar belakang -->
+        <item name="android:textColor">@android:color/white</item> <!-- Warna teks -->
+        <item name="android:textSize">16sp</item> <!-- Ukuran teks -->
+        <item name="android:fontFamily">@font/poppins_bold</item> <!-- Font -->
+    </style>
+    <style name="TitleTextCardStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SubTitleTextCardStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TitleTextStyle">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="SubTitleTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

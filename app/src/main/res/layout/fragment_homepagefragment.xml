@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="120dp"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.homepage.HomePageFragment">
 
@@ -73,10 +74,8 @@
             android:text="@string/homepage_description_title"
             app:layout_constraintTop_toBottomOf="@id/cl_profile"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginStart="24dp"
-            android:textColor="@color/purple"/>
+            style="@style/TitleTextStyle"
+            android:layout_marginStart="24dp"/>
         <TextView
             android:id="@+id/tv_latest_playlist"
             android:layout_width="wrap_content"
@@ -97,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/button"
+            style="@style/CustomButtonStyle"
             android:text="@string/button_homepage"
             app:layout_constraintEnd_toEndOf="@+id/tv_latest_playlist"
             app:layout_constraintStart_toStartOf="@+id/tv_latest_playlist"
@@ -111,9 +110,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_generateplaylist"
             android:layout_marginTop="16dp"
             android:layout_marginStart="24dp"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="20sp"
-            android:textColor="@color/purple"
+            style="@style/TitleTextStyle"
             />
         <LinearLayout
             android:id="@+id/ll_mood"
@@ -133,6 +130,7 @@
                 android:layout_marginEnd="16dp"
                 >
                 <ImageView
+                    android:id="@+id/ivMood1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     tools:src="@tools:sample/avatars"
@@ -140,6 +138,7 @@
                     android:scaleType="centerCrop"
                     android:clipToOutline="true"/>
                 <TextView
+                    android:id="@+id/tvMood1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/weekly_favorite_mood_placeholder"
@@ -154,6 +153,7 @@
                 android:layout_marginEnd="16dp"
                 >
                 <ImageView
+                    android:id="@+id/ivMood2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="@string/image_placeholder"
@@ -162,6 +162,7 @@
                     android:scaleType="centerCrop"
                     android:clipToOutline="true"/>
                 <TextView
+                    android:id="@+id/tvMood2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/weekly_favorite_mood_placeholder"
@@ -176,6 +177,7 @@
                 android:layout_marginEnd="16dp"
                 >
                 <ImageView
+                    android:id="@+id/ivMood3"
                     android:contentDescription="@string/image_placeholder"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -184,6 +186,7 @@
                     android:scaleType="centerCrop"
                     android:clipToOutline="true"/>
                 <TextView
+                    android:id="@+id/tvMood3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/weekly_favorite_mood_placeholder"
@@ -202,8 +205,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/homepage_recommendation_title"
-            android:textColor="@color/purple"
-            android:textSize="20sp"
+            style="@style/TitleTextStyle"
             android:layout_marginStart="24dp"
             app:layout_constraintTop_toBottomOf="@+id/ll_mood"
             tools:layout_editor_absoluteX="-9dp" />

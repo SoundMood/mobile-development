@@ -8,47 +8,47 @@
     tools:context=".ui.moodplaylistgenerated.MoodPlaylistGeneratedActivity">
     <Button
         android:id="@+id/btn_back"
-        android:layout_width="110dp"
-        android:layout_height="35dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/back_butt_shape"
         android:gravity="center"
+        style="@style/CustomBackButton"
+        android:text="@string/back"
         app:icon="@drawable/baseline_arrow_back_24"
         app:iconGravity="textStart"
-        android:background="@drawable/back_butt_shape"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="24dp"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_playlist_mood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Here are Your Playlist"
+        android:text="@string/here_is_your_playlist_track"
         app:layout_constraintTop_toBottomOf="@id/btn_back"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="24dp"
-        android:textSize="24sp"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/purple"
-
-
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        style="@style/TitleTextStyle"
         />
+
     <TextView
         android:id="@+id/tv_playlist_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is our playlist recommendation for you"
+        android:text="@string/this_is_our_playlist_recommendation_for_you"
         app:layout_constraintTop_toBottomOf="@id/tv_playlist_mood"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="-8dp"
+        style="@style/SubTitleTextStyle"
         />
     <Button
         android:id="@+id/btn_export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/CustomButtonStyle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_playlist_desc"
         android:layout_marginTop="8dp"
@@ -61,13 +61,14 @@
         android:id="@+id/rvTrack"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_export"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_export" />
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
