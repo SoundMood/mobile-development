@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.drawable.DrawableCompat.applyTheme
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +20,7 @@ import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.captureimagepage.CaptureImagePage
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        lifecycleScope.launch {
+            val isDarkMode = preferenceViewModel.darkMode.first()
+            applyTheme(isDarkMode)
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -57,6 +64,14 @@ class MainActivity : AppCompatActivity() {
         binding.fabCaptureImage.setOnClickListener {
             startActivity(Intent(this@MainActivity, CaptureImagePage::class.java))
         }
+    }
+    private fun applyTheme(isDarkMode: Boolean) {
+        val mode = if (isDarkMode) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
 
