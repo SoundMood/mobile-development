@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     companion object{
         const val TAG = "TAG"
         const val REQUESTCODE = 1337
-        const val CLIENTID = "4152b43658be46e092036a77856d0b09"
+        const val CLIENTID = "65498186928145118afa24d6019af2af"
         const val REDIRECTURI = "com.example.authorizationtest://callback"
     }
 
@@ -90,7 +90,19 @@ class LoginActivity : AppCompatActivity() {
             CLIENTID,
             AuthorizationResponse.Type.TOKEN,
             REDIRECTURI
-        ).setScopes(arrayOf("user-read-private", "user-read-email", "user-read-currently-playing","playlist-read-private","playlist-read-collaborative"))
+        ).setScopes(arrayOf("user-read-playback-state",
+            "user-modify-playback-state",
+            "user-read-currently-playing",
+            "app-remote-control",
+            "playlist-read-private",
+            "playlist-read-collaborative",
+            "playlist-modify-private",
+            "playlist-modify-public",
+            "user-read-playback-position",
+            "user-read-recently-played",
+            "user-top-read",
+            "user-library-read",
+            "user-read-email"))
             .build()
         AuthorizationClient.openLoginActivity(this, REQUESTCODE,auth)
     }

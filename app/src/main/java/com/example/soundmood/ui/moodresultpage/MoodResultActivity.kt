@@ -57,7 +57,9 @@ class MoodResultActivity : AppCompatActivity() {
                 val intent = Intent(this,MoodPlaylistGeneratedActivity::class.java)
                 intent.putStringArrayListExtra(EXTRA_MUSIC_LIST, ArrayList(musicList))
                 intent.putExtra("USER_ID",userId)
-
+                moodResultViewModel.mood.observe(this){mood->
+                    intent.putExtra("MOOD",mood)
+                }
                 startActivity(intent)
             }else{
                 Log.d(TAG,"Music list empty.")
@@ -94,6 +96,7 @@ class MoodResultActivity : AppCompatActivity() {
             } else {
                 Log.d(TAG, "Mood is null or not set yet.")
             }
+
         }
     }
 

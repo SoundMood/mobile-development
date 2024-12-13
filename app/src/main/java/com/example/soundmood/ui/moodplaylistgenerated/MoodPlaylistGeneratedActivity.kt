@@ -75,9 +75,11 @@ class MoodPlaylistGeneratedActivity : AppCompatActivity() {
     private fun createSpotifyPlaylist(){
         val musicList = moodPlaylistGeneratedViewModel.musicList.value
         val userId = intent.getStringExtra("USER_ID")
+        val mood = intent.getStringExtra("MOOD")
         Log.d(TAG,"$userId")
+        Log.d(TAG,"mood : $mood")
         if (userId != null) {
-            moodPlaylistGeneratedViewModel.createSpotifyPlaylist(userId,"SoundMood")
+            moodPlaylistGeneratedViewModel.createSpotifyPlaylist(userId,"SoundMood - $mood")
         }
         moodPlaylistGeneratedViewModel.spotifyPlaylistId.observe(this){playlistId->
             if(playlistId!=null){
