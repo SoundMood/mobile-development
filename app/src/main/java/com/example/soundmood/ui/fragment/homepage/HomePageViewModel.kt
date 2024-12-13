@@ -23,6 +23,9 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
     private val _userName = MutableLiveData<String>()
     val userName:LiveData<String> get() = _userName
 
+    private val _userId = MutableLiveData<String>()
+    val userId:LiveData<String> get() = _userId
+
     private val _userImageProfile = MutableLiveData<Any>()
     val userImageProfile:LiveData<Any> get() = _userImageProfile
 
@@ -216,6 +219,7 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
                     _isLoading.value = false
                     val userProfile = response.body()!!
                     _userName.value = userProfile.displayName ?: "Unknown User"
+                    _userId.value = userProfile.id ?: "No ID"
                     _userImageProfile.value = userProfile.images?.firstOrNull()?.url ?: ""
                     Log.d("HomePageViewModel","UserName : $_userName")
                     isDataLoaded = true

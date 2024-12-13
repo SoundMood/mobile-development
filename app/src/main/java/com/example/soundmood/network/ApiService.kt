@@ -1,5 +1,8 @@
 package com.example.soundmood.network
 
+import com.example.soundmood.data.AddTracksRequest
+import com.example.soundmood.data.AddTracksResponse
+import com.example.soundmood.data.PlaylistRequest
 import com.example.soundmood.data.AlbumResponse
 import com.example.soundmood.data.PlaylistApiResponse
 import com.example.soundmood.data.PlaylistResponse
@@ -8,9 +11,8 @@ import com.example.soundmood.data.TokenResponse
 import com.example.soundmood.data.TrackResponse
 import com.example.soundmood.data.UserProfile
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -75,5 +77,19 @@ interface ApiService {
     suspend fun getAppToken(
         @Field("access_token") accessToken: String
     ): Response<TokenResponse>
+
+    @POST("users/{user_id}/playlists")
+    suspend fun createPlaylist(
+        @Header("Authorization") appToken: String,
+        @Path("user_id") userId: String?,
+        @Body playlistRequest: PlaylistRequest
+    ): Response<PlaylistResponse>
+
+    @POST("playlists/{playlist_id}/tracks")
+    suspend fun addTracksToPlaylist(
+        @Header("Authorization") appToken: String,
+        @Path("playlist_id") playlistId: String,
+        @Body tracks: AddTracksRequest
+    ): Response<AddTracksResponse>
 
 }

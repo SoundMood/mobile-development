@@ -107,6 +107,7 @@ class CaptureImagePage : AppCompatActivity(){
         val photoFile = createFile(applicationContext.cacheDir, "IMG", ".jpg")
         binding.progressBar.visibility= android.view.View.VISIBLE
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        val user_id = intent.getStringExtra("user_id")
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
@@ -121,6 +122,8 @@ class CaptureImagePage : AppCompatActivity(){
                             Log.d("CaptureImagePage", "Playlist ID: $playlistId")
                             val intent = Intent(this@CaptureImagePage, MoodResultActivity::class.java)
                             intent.putExtra("PLAYLIST_ID", playlistId)
+                            intent.putExtra("USER_ID", user_id)
+
                             startActivity(intent)
                             finish()
                         }
