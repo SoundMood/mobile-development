@@ -53,8 +53,10 @@ class HomePageFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner){isLoading->
             if(isLoading){
+                binding.ivLoad.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.VISIBLE
             }else{
+                binding.ivLoad.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
             }
         }

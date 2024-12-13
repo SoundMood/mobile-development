@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.soundmood.databinding.FragmentProfilepagefragmentBinding
 import com.example.soundmood.ui.ViewModelFactory
 import com.example.soundmood.ui.loginpage.LoginActivity

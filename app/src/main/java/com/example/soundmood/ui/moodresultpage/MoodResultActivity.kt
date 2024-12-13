@@ -42,8 +42,10 @@ class MoodResultActivity : AppCompatActivity() {
         }
         moodResultViewModel.loading.observe(this){loading->
             if(loading){
+                binding.ivLoad.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.VISIBLE
             }else{
+                binding.ivLoad.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
             }
         }
@@ -67,11 +69,26 @@ class MoodResultActivity : AppCompatActivity() {
         moodResultViewModel.mood.observe(this) { mood ->
             if (mood != null) {
                 when(mood){
-                    "angry"->binding.imgMoodResult.setImageResource(R.drawable.angry)
-                    "happy"->binding.imgMoodResult.setImageResource(R.drawable.happy)
-                    "neutral"->binding.imgMoodResult.setImageResource(R.drawable.neutral)
-                    "sad"->binding.imgMoodResult.setImageResource(R.drawable.sad)
-                    "surprised"->binding.imgMoodResult.setImageResource(R.drawable.surprised)
+                    "angry"-> {
+                        binding.imgMoodResult.setImageResource(R.drawable.angry)
+                        binding.tvmoodresult.text = mood
+                    }
+                    "happy"-> {
+                        binding.imgMoodResult.setImageResource(R.drawable.happy)
+                        binding.tvmoodresult.text = mood
+                    }
+                    "neutral"-> {
+                        binding.imgMoodResult.setImageResource(R.drawable.neutral)
+                        binding.tvmoodresult.text = mood
+                    }
+                    "sad"-> {
+                        binding.imgMoodResult.setImageResource(R.drawable.sad)
+                        binding.tvmoodresult.text = mood
+                    }
+                    "surprised"-> {
+                        binding.imgMoodResult.setImageResource(R.drawable.surprised)
+                        binding.tvmoodresult.text = mood
+                    }
                 }
                 Toast.makeText(this@MoodResultActivity,"Mood : $mood",Toast.LENGTH_SHORT).show()
             } else {

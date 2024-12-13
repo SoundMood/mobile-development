@@ -45,11 +45,13 @@
     <string name="neutral">Neutral</string>
     <string name="album_name">Album Name</string>
     <string name="album_cover">Album Cover</string>
-    <string name="genarate">Genarate</string>
+    <string name="genarate">Generate</string>
     <string name="this_is_the_result">This is The Result!</string>
     <string name="congratulations_this_is_your_mood">Congratulations, this is your mood!</string>
     <string name="lets_take_a_selfie">Lets Take a Selfie</string>
     <string name="tap_the_camera_button_to_take_selfie">Tap the Camera Button to Take Selfie</string>
     <string name="here_is_your_playlist_track">Here is Your Playlist Track</string>
     <string name="this_is_our_playlist_recommendation_for_you">This is our playlist recommendation for you</string>
+    <string name="mood">Mood</string>
+    <string name="loading_white">Loading White</string>
 </resources>
