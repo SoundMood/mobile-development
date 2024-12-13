@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
             CLIENTID,
             AuthorizationResponse.Type.TOKEN,
             REDIRECTURI
-        ).setScopes(arrayOf("user-read-private", "user-read-email", "user-read-currently-playing"))
+        ).setScopes(arrayOf("user-read-private", "user-read-email", "user-read-currently-playing","playlist-read-private","playlist-read-collaborative"))
             .build()
         AuthorizationClient.openLoginActivity(this, REQUESTCODE,auth)
     }

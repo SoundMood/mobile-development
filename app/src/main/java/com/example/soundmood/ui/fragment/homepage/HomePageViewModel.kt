@@ -1,25 +1,21 @@
 package com.example.soundmood.ui.fragment.homepage
 
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.soundmood.data.PlaylistApiResponse
 import com.example.soundmood.data.PreferenceViewModel
-import com.example.soundmood.data.UserProfile
 import com.example.soundmood.network.ApiConfig
-import com.example.soundmood.util.Utility.Companion.parseIso8601ToEpoch
+import com.example.soundmood.util.Utility.Companion.albumIds
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import okhttp3.internal.parseCookie
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
 
 class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : ViewModel() {
 
-
+    private val _recommendationAlbum = MutableLiveData<List<PlaylistApiResponse>>()
+    val recommendationAlbum : LiveData<List<PlaylistApiResponse>> = _recommendationAlbum
 
     private val _error = MutableLiveData<String>()
     val error:LiveData<String> get() = _error
@@ -42,23 +38,113 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
     val isLoading : LiveData<Boolean> get() = _isLoading
 
     init{
-        viewModelScope.launch {
-            if(accessToken.isNullOrEmpty() || appToken.isNullOrEmpty()){
-                preferenceViewModel.accsessToken.collect{token->
-                    accessToken = token
-                    appToken = preferenceViewModel.getAppToken()
-                    if(appToken.isNullOrEmpty()){
-                        getAppToken()
-                    }else{
-                        getUserProfile()
-                    }
-                }
-            }
-
-        }
-
+        loadInitialData()
     }
 
+
+
+//    fun getRecommendationPlaylist() {
+//        if (isDataLoaded) return
+//        if (accessToken.isNullOrEmpty()) {
+//            _error.value = "Access token is not available!"
+//            return
+//        }
+//
+//        viewModelScope.launch {
+//            val playlistIdsToFetch = playlistIds.shuffled().take(6).toMutableList()
+//            playlistIdsToFetch[0] = "4TsQjExApECc0uy8OYmYgo"
+//            Log.d("HomePageViewModel","Access Token : $accessToken")
+//            try {
+//                val response = playlistIdsToFetch.map { playlistId ->
+//                    async {
+//                        try {
+//                            val result = ApiConfig.getApiService().getPlaylist("Bearer $accessToken", playlistId)
+//                            Log.d("HomePageViewModel", "Response for playlist $playlistId: ${result.code()} - ${result.message()} - ${result.raw()}") // Log response status
+//                            if (result.isSuccessful) {
+//                                Log.d("HomePageViewModel", "Playlist $playlistId body: ${result.body()}")
+//                            } else {
+//                                Log.e("HomePageViewModel", "Error fetching playlist $playlistId: ${result.errorBody()?.string()}")
+//                            }
+//                            result
+//                        } catch (e: Exception) {
+//                                Log.e("HomePageViewModel", "Exception fetching playlist $playlistId: ${e.message}")
+//                            throw e
+//                        }
+//                    }
+//
+//                }
+//                val results = response.awaitAll()
+//                val playlists = results.mapNotNull { result ->
+//                    if (result.isSuccessful) {
+//                        result.body()
+//                    } else {
+//                        _error.postValue("Error loading playlist: ${result.message()}")
+//                        null
+//                    }
+//                }
+//                withContext(Dispatchers.Main) {
+//                    Log.d("HomePageViewModel","Final playlist response $playlists")
+//                    _recommendationPlaylists.value = playlists
+//                    isDataLoaded = true
+//                }
+//            } catch (e: Exception) {
+//                _error.value = "Exception: ${e.message}"
+//            }
+//        }
+//    }
+
+    private fun loadInitialData() {
+        viewModelScope.launch {
+            accessToken = preferenceViewModel.accsessToken.firstOrNull()
+            appToken = preferenceViewModel.getAppToken()
+
+            if (accessToken.isNullOrEmpty()) {
+                _error.value = "Access token is missing."
+                return@launch
+            }
+
+            if (appToken.isNullOrEmpty()) {
+                getAppToken()
+            } else {
+                getUserProfile()
+            }
+        }
+    }
+
+    fun getSeveralAlbum(){
+        if (isDataLoaded) return
+        if(accessToken.isNullOrEmpty()){
+            _error.value = "Access token is not available!"
+            return
+        }
+
+        if(isUserProfileBeingFetched) return
+        isAppTokenBeingFetched = true
+
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val albumIdsToFetch = albumIds.shuffled().take(6).joinToString(",")
+                val response = ApiConfig.getApiService().getSeveralAlbums("Bearer $accessToken",albumIdsToFetch)
+                if(response.isSuccessful && response.body()!=null){
+                    val tracks = response.body()?.albums?.map { albumId ->
+                        PlaylistApiResponse(
+                            name = albumId?.name,
+                            images = albumId?.images
+                        )
+                    } ?: emptyList()
+
+                    _recommendationAlbum.value = tracks
+                }else{
+                    Log.e("HomePageFragment","API Error ${response.raw()}")
+                }
+            }catch (e:Exception){
+                Log.e("HomePageFragment","Exception ${e.message}")
+            }finally {
+                _isLoading.value = false
+            }
+        }
+    }
 
     // Get atau Refresh App Token Baru!
     fun getAppToken(){
@@ -100,8 +186,8 @@ class HomePageViewModel(private val preferenceViewModel: PreferenceViewModel) : 
             try {
                 val response = ApiConfig.getApiService().getCurrentUser("Bearer $accessToken")
                 if (response.isSuccessful) {
-                    isDataLoaded = false // Reset status untuk memuat ulang data terbaru
-                    getUserProfile() // Muat ulang data pengguna
+                    isDataLoaded = false
+                    getUserProfile()
                 }
             } catch (e: Exception) {
                 Log.e("HomePageViewModel", "Error updating profile: ${e.message}")

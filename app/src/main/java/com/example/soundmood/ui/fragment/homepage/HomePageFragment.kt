@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.soundmood.R
@@ -26,9 +27,10 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
     private var _binding : FragmentHomepagefragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel : HomePageViewModel
+    private val viewModel:HomePageViewModel by viewModels {
+        ViewModelFactory(requireContext().applicationContext)
+    }
 
-//    private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +42,19 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this,ViewModelFactory(requireContext())).get(HomePageViewModel::class.java)
 
+
+        val adapter  = HomePageAdapter(mutableListOf())
+        val gridLayoutManager = GridLayoutManager(requireContext(),3)
+
+        binding.rvRecommendation.apply {
+            layoutManager = gridLayoutManager
+            this.adapter = adapter
+        }
+
+        viewModel.recommendationAlbum.observe(viewLifecycleOwner){playlists->
+            adapter.updateData(playlists)
+        }
 
         viewModel.userName.observe(viewLifecycleOwner){userName->
             binding.textviewUsername.text = userName
@@ -50,9 +63,11 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
         viewModel.userImageProfile.observe(viewLifecycleOwner){ imageUrl->
             Glide.with(requireContext())
                 .load(imageUrl)
+                .placeholder(R.drawable.startingpage)
                 .circleCrop()
                 .into(binding.imageviewProfile)
         }
+
         viewModel.isLoading.observe(viewLifecycleOwner){isLoading->
             if(isLoading){
                 binding.progressBar.visibility = View.VISIBLE
@@ -61,6 +76,11 @@ class HomePageFragment : Fragment(R.layout.fragment_homepagefragment) {
             }
         }
 
+        viewModel.userName.observe(viewLifecycleOwner){userName->
+            if(!userName.isNullOrEmpty()){
+                viewModel.getSeveralAlbum()
+            }
+        }
         binding.btnGenerateplaylist.setOnClickListener{
             startActivity(Intent(requireContext(),CaptureImagePage::class.java))
         }

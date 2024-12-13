@@ -1,5 +1,7 @@
 package com.example.soundmood.network
 
+import com.example.soundmood.data.AlbumResponse
+import com.example.soundmood.data.PlaylistApiResponse
 import com.example.soundmood.data.PlaylistResponse
 import com.example.soundmood.data.PredictResponse
 import com.example.soundmood.data.TokenResponse
@@ -33,6 +35,22 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("ids") ids:String
     ): Response<TrackResponse>
+
+    // Spotify API Call for Getting Playlist from Playlist ID
+    @GET("playlists/{playlist_id}")
+    suspend fun getPlaylist(
+        @Header("Authorization") token:String,
+        @Path("playlist_id") playlistId: String
+    ): Response<PlaylistApiResponse>
+
+    // Spotify API Call for Several Album
+    @GET("albums")
+    suspend fun getSeveralAlbums(
+        @Header("Authorization") appToken: String,
+        @Query("ids") ids:String,
+        @Query("market") market:String?=null
+    ): Response<AlbumResponse>
+
 
     // SoundMood Api Call for Getting Playlist Detail
     @GET("me/playlists/{playlist_id}")
