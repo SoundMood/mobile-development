@@ -67,30 +67,35 @@
         android:text="@string/your_history"
         app:layout_constraintTop_toBottomOf="@id/cl_profile"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="24sp"
+
+        style="@style/TitleTextStyle"
         android:fontFamily="@font/poppins_bold"
         android:layout_marginTop="12dp"
-        android:layout_marginLeft="24dp"
-        android:textColor="@color/purple"/>
+        android:layout_marginStart="24dp" />
     <TextView
         android:id="@+id/tv_latest_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All your latest playlist"
+        android:text="@string/all_your_latest_playlist"
         app:layout_constraintTop_toBottomOf="@id/tv_your_history"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="12sp"
-        android:fontFamily="@font/poppins_regular"
-        android:layout_marginLeft="24dp"
+        style="@style/SubTitleTextStyle"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="-8dp"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_latest_playlist"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        />
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_latest_playlist"
+        app:layout_constraintVertical_bias="0.0" />
 
     <!-- TODO: Update blank fragment layout -->
 

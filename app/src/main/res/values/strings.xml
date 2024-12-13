@@ -54,4 +54,6 @@
     <string name="this_is_our_playlist_recommendation_for_you">This is our playlist recommendation for you</string>
     <string name="mood">Mood</string>
     <string name="loading_white">Loading White</string>
+    <string name="all_your_latest_playlist">All your latest playlist</string>
+    <string name="lets_get_started">Lets Get Started!</string>
 </resources>
